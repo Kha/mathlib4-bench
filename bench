@@ -1,0 +1,9 @@
+#! /bin/bash -l
+set -euxo pipefail
+export DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
+
+rm -rf ~/.elan/{toolchains,update-hashes}
+cp $DIR/* "$1"
+cd "$1"
+sed -i 's/moreLeanArgs := \#\[/\0"--profile","-Dprofiler.threshold=10000",/' lakefile.lean
+timeout -s KILL 1h time sudo temci-shell nix --experimental-features "nix-command flakes" shell github:leanprover/lean4/96aa021\?dir=tests/bench#temci -c bash -c "temci exec --config temci-config.yml >2 && temci report --reporter codespeed2"

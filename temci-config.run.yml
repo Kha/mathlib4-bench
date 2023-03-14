@@ -1,0 +1,12 @@
+- attributes:
+    description: build
+    time: &time
+      runner: perf_stat
+      perf_stat:
+        properties: ['wall-clock', 'task-clock', 'instructions', 'branches', 'branch-misses']
+      rusage_properties: ['maxrss']
+  run_config:
+    <<: *time
+    cmd: |
+      bash -c 'set -eo pipefail; lake clean && lake build -v | ./accumulate_profile.py | grep -v took'
+    parse_output: true
