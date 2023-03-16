@@ -14,4 +14,6 @@ for cat in sorted(cats.keys()):
     cat2 = cat
     if len(sys.argv) > 1:
         cat2 = f"{sys.argv[1]} {cat}"
+    if "|" not in cat2:
+        cat2 += "|s"
     print(f"{cat2!r}: {cats[cat]:f}")

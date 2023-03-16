@@ -24,9 +24,9 @@
     cmd: |
       bash -c "
       set -euxo pipefail &&
-      echo -n '.lean: ' &&
+      echo -n '.lean|lines: ' &&
       find Mathlib -name '*.lean' -print0 | wc -l --files0-from=- | tail -1 | cut -d' ' -f 1
-      echo -n '.olean: ' &&
+      echo -n '.olean|bytes: ' &&
       find build -name '*.olean' -print0 | wc -c --files0-from=- | tail -1 | cut -d' ' -f 1
       "
     max_runs: 1
