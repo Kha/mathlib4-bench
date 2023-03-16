@@ -11,6 +11,14 @@
       bash -c 'set -eo pipefail; lake clean && lake build -v | ./accumulate_profile.py | grep -v took'
     parse_output: true
 - attributes:
+    description: lint
+  run_config:
+    runner: perf_stat
+    perf_stat:
+      properties: ['wall-clock', 'instructions']
+    cmd: |
+      make lint
+- attributes:
     description: size
   run_config:
     cmd: |
