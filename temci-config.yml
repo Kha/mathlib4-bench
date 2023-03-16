@@ -1,4 +1,5 @@
 run:
     discarded_runs: 0
     runs: 1
+    shuffle: false
     in: temci-config.run.yml
