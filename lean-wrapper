@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+for arg in "$@"; do
+    if [[ "$arg" =~ .*\./\./(.*)\.lean ]]; then
+        mod=${BASH_REMATCH[1]//\//.}
+    fi
+done
+
+perf stat -e instructions -x ';' $(elan which lean) --profile -Dprofiler.threshold=10000 "$@" |& sed -E "s/([0-9]+);;instructions;.*/~$mod| \\1s/"
