@@ -5,4 +5,4 @@ export DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 rm -rf ~/.elan/{toolchains,update-hashes}
 cp $DIR/* "$1"
 cd "$1"
-timeout -s KILL 1h time sudo temci-shell nix --experimental-features "nix-command flakes" shell github:leanprover/lean4/83c1a1a{#nixpkgs.jq,\?dir=tests/bench#temci} -c ./run
+timeout -s KILL 1h time sudo temci-shell nix --experimental-features "nix-command flakes" shell github:leanprover/lean4/b81cff8{#nixpkgs.jq,\?dir=tests/bench#temci} -c ./run
