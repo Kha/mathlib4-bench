@@ -3,6 +3,10 @@ set -euo pipefail
 export DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 
 rm -rf ~/.elan/{toolchains,update-hashes}
-cp $DIR/* "$1"
 cd "$1"
-timeout -s KILL 1h time sudo temci-shell nix --experimental-features "nix-command flakes" shell github:leanprover/lean4/b81cff8{#nixpkgs.jq,\?dir=tests/bench#temci} -c ./run
+if [[ -d ./scripts/bench ]]; then
+    timeout -s KILL 1h time sudo temci-shell nix --experimental-features "nix-command flakes" shell github:leanprover/lean4/b81cff8{#nixpkgs.jq,\?dir=tests/bench#temci} -c ./scripts/bench/run
+else
+    cp $DIR/* "$1"
+    timeout -s KILL 1h time sudo temci-shell nix --experimental-features "nix-command flakes" shell github:leanprover/lean4/b81cff8{#nixpkgs.jq,\?dir=tests/bench#temci} -c ./run
+fi
