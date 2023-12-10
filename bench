@@ -11,9 +11,4 @@ if git merge-base --is-ancestor @ $first; then
     git checkout $first -- scripts/bench/temci-config.run.yml
 fi
 
-if [[ -d ./scripts/bench ]]; then
-    timeout -s KILL 4h time nix --experimental-features "nix-command flakes" shell github:leanprover/lean4/b81cff8{#nixpkgs.{jq,gnumake},\?dir=tests/bench#temci} -c ./scripts/bench/run
-else
-    cp $DIR/* "$1"
-    timeout -s KILL 4h time nix --experimental-features "nix-command flakes" shell github:leanprover/lean4/b81cff8{#nixpkgs.{jq,gnumake},\?dir=tests/bench#temci} -c ./run
-fi
+timeout -s KILL 4h time ./scripts/bench/run
