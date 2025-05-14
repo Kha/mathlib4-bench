@@ -5,6 +5,7 @@ export DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 
 rm -rf ~/.elan/{toolchains,update-hashes}
 cd "$1"
+lean  # install and sanity check
 
 first=19210bcc58535416f6009c53089eeab4ef608b4d
 if git merge-base --is-ancestor @ $first; then
